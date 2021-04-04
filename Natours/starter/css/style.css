@@ -6,3 +6,217 @@ Medium green: #55c57a
 Dark green: #28b485
 
 */
+
+*,
+*::after,
+*::before {
+  /* Get rid of default margin and paddings */
+  margin: 0;
+  padding: 0;
+
+  /* Borders and paddings are not added to total width and height of box */
+  box-sizing: inherit;
+}
+
+html {
+  /* This means 1rem = default font size */
+  /* font-size: 10px; */
+  font-size: 62.5%;
+  /* The percentage is the percent of the default font size (for browsers its usually 16px) */
+  /* 62.5% = 10px */
+}
+
+body {
+  font-family: "Lato", sans-serif;
+  font-weight: 400;
+  line-height: 1.7;
+  color: #777;
+  padding: 3rem;
+
+  box-sizing: border-box;
+}
+
+.header {
+  height: 95vh;
+  /* To specify gradients use background-image property */
+  /* First specified is top */
+  background-image: linear-gradient(
+      to right bottom,
+      rgb(126, 213, 111, 0.8),
+      rgba(32, 159, 117, 0.8)
+    ),
+    url(../img/hero.jpg);
+
+  /* cover always trys to fit width into box */
+  background-size: cover;
+  /* makes top of image always stay at top of container */
+  background-position: top;
+  position: relative;
+
+  clip-path: polygon(0 0, 100% 0, 100% 75vh, 0 100%);
+}
+
+.logo-box {
+  position: absolute;
+  /* Reference from where top and left begin is with parent element (.header) */
+  top: 4rem;
+  left: 4rem;
+}
+
+.logo {
+  height: 3.5rem;
+}
+
+.text-box {
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  /* transform is in relation to the element itself, not the parent */
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+.heading-primary {
+  color: white;
+  text-transform: uppercase;
+
+  /* Helps eliminate shaking at end of animations */
+  backface-visibility: hidden;
+  margin-bottom: 6rem;
+}
+
+.heading-primary-main {
+  display: block;
+  font-size: 6rem;
+  font-weight: 400px;
+  letter-spacing: 3.5rem;
+
+  /* animation-name: moveInLeft;
+  animation-duration: 1.5s;
+  animation-timing-function: ease-out; */
+  animation: moveInLeft 1.5s ease-out;
+
+  /* animation-delay: 3s;
+ animation-iteration-count: 3; */
+}
+
+.heading-primary-sub {
+  display: block;
+  font-size: 2rem;
+  font-weight: 700px;
+  letter-spacing: 1.74rem;
+
+  /*
+  animation-name: moveInRight;
+  animation-duration: 1.5s;
+  animation-timing-function: ease-out;
+  */
+  animation: moveInRight 1.5s ease-out;
+}
+
+/* For browser optimization, its best to only do opacity and/or transform */
+@keyframes moveInLeft {
+  /* Start */
+  0% {
+    opacity: 0;
+    transform: translateX(-10rem);
+  }
+
+  80% {
+    transform: translateX(1rem);
+  }
+
+  /* Finish */
+  100% {
+    opacity: 1;
+    transform: translate(0);
+  }
+}
+
+@keyframes moveInRight {
+  /* Start */
+  0% {
+    opacity: 0;
+    transform: translateX(10rem);
+  }
+
+  80% {
+    transform: translateX(-1rem);
+  }
+
+  /* Finish */
+  100% {
+    opacity: 1;
+    transform: translate(0);
+  }
+}
+
+@keyframes moveInButton {
+  /* Start */
+  0% {
+    opacity: 0;
+    transform: translateY(5rem);
+  }
+
+  /* Finish */
+  100% {
+    opacity: 1;
+    transform: translate(0);
+  }
+}
+
+.btn:link,
+.btn:visited {
+  text-transform: uppercase;
+  text-decoration: none;
+  padding: 1.5rem 4rem;
+  display: inline-block;
+  border-radius: 9rem;
+  transition: all 0.2s;
+  position: relative;
+  font-size: 1.6rem;
+}
+.btn-animated {
+  animation: moveInButton 0.5s ease-out 0.75s;
+  animation-fill-mode: backwards;
+}
+
+/* Transform is related to the initial state (not the current state) */
+.btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 1rem 2rem rgb(0, 0, 0, 0.2);
+}
+.btn:active {
+  transform: translateY(-1px);
+  box-shadow: 0 0.5rem 1rem rgb(0, 0, 0, 0.2);
+}
+
+/* ::after element is treated like a child of the btn */
+.btn::after {
+  content: "";
+  display: inline-block;
+  height: 100%;
+  width: 100%;
+  border-radius: 9rem;
+  /* absolute position needs a reference, 
+  so it uses the first parent element to have the position: realtive property */
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  transition: all 0.5s;
+}
+
+.btn-white {
+  background-color: white;
+  color: #777;
+}
+
+.btn-white::after {
+  background-color: white;
+}
+
+.btn:hover::after {
+  transform: scaleX(1.4) scaleY(1.6);
+  opacity: 0;
+}
